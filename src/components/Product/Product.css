@@ -1,0 +1,22 @@
+
+.product-item {
+    margin: 60px;
+    padding: 20px;
+}
+
+
+.product-item img {
+    height: 300px;
+    width: 300px;
+}
+
+
+.product-item h1 {
+    color: var(--blue);
+}
+
+
+.product-item span {
+    font-size: 25px;
+    color: var(--blue);
+}
