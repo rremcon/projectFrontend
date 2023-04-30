@@ -10,7 +10,7 @@ function AuthContextProvider({children}) {
     const [auth, setAuth] = useState({
         isAuth: false,
         user: null,
-        status: "pending"
+        status: "pending",
     });
     const navigate = useNavigate();
 
@@ -21,7 +21,6 @@ function AuthContextProvider({children}) {
 
         if(storedToken) {
         const decodedToken = jwt_decode(storedToken)
-        console.log(decodedToken.exp)
 
         if (Math.floor (Date.now()/1000) < decodedToken.exp) {
             console.log("USER STILL LOGGED IN")
@@ -55,29 +54,33 @@ function AuthContextProvider({children}) {
 
         async function fetchUserData(jwt, id, redirect) {
             try {
-                const response = await axios.get(`http://localhost:3000/600/users/${id}`, {
-                // const response = await axios.get(`http://localhost:8080/users/${id}`, {
-                // const response = await axios.get(`http://localhost:8080/accounts/${id}`, {
-                // const response = await axios.get(`http://localhost:8080/users/accounts/${id}`, {
+                const response = await axios.get(`http://localhost:8080/accounts/${id}`, {
                     headers:
                         {
                             "Content-Type": "application/json",
                             Authorization: `Bearer ${jwt}`,
                         }
                 })
-
                 setAuth(
                     {
                         ...auth,
                         isAuth: true,
                         user: {
-                            email: response.data.email,
                             id: response.data.id,
-                            username: response.data.username
+                            email: response.data.email,
+                            username: response.data.username,
+
+                            firstname:response.data.firstname,
+                            lastname:response.data.lastname,
+                            birthdate:response.data.birthdate,
+                            address:response.data.address,
+                            zipcode:response.data.zipcode,
+                            city:response.data.city,
+                            country:response.data.country,
+                            authorities:response.data.authority,
                         },
                         status: "done"
                     })
-
                 console.log(response)
 
                 if (redirect) {
@@ -94,8 +97,7 @@ function AuthContextProvider({children}) {
         }
 
 
-    function handleLogout(e) {
-        // e.preventDefault();
+    function handleLogout() {
         console.log('USER LOGGED OUT')
         localStorage.removeItem('token')
         setAuth({

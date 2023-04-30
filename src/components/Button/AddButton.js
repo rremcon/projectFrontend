@@ -3,12 +3,14 @@ import {ClickContext} from "../../context/ClickContext";
 
 function Addbutton() {
 
-    const {plusOneFunction} = useContext(ClickContext)
+    const {plusOneFunction, clicks} = useContext(ClickContext)
 
     return (
         <button type="button"
                 className="quantity-button"
-                onClick={plusOneFunction}>
+                onClick={plusOneFunction}
+                disabled={clicks === 6}
+        >
             +
         </button>
     );

@@ -59,7 +59,6 @@ function Tickets() {
                                 >select
                                 </button>
                                 </Link>
-
                             </tr>
                         })}
                         </tbody>

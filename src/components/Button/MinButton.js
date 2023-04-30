@@ -3,12 +3,14 @@ import {ClickContext} from "../../context/ClickContext";
 
 function MinButton() {
 
-    const {minOneFunction} = useContext(ClickContext)
+    const {minOneFunction, clicks} = useContext(ClickContext)
 
     return (
         <button type="button"
                 className="quantity-button"
-                onClick={minOneFunction}>
+                onClick={minOneFunction}
+                disabled={clicks === 0}
+        >
             -
         </button>
     );

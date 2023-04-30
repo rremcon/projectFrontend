@@ -7,56 +7,55 @@ function AdminOrders() {
 
     const token = localStorage.getItem('token');
     const [orders, setOrders] = useState([]);
-    const [deleteOrder, toggleDeleteOrder] = useState(false);
-    const [id, setIdToDelete] = useState("");
+    const [selectDelete, setDelete] = useState(false);
 
 
     useEffect(()=> {
-
-        async function fetchOrders() {
-            try {
-                const response = await axios.get('http://localhost:8080/orders');
-                setOrders(response.data);
-                console.log(response.data);
-
-            } catch (e) {
-                console.error(e);
-            }
-        }
-        fetchOrders();
-    }, []);
-
-
-    function deleteSelected(e, orderId) {
-        e.preventDefault();
-        toggleDeleteOrder(true);
-        setIdToDelete(orderId);
-    }
-
-
-    useEffect(() => {
         const controller = new AbortController();
-        async function deleteOrder() {
+        async function fetchOrders() {
+
             try {
-                const response = await axios.delete(`http://localhost:8080/accounts/${id}`,{
+                const response = await axios.get('http://localhost:8080/orders', {
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${token}`,
                     },
                     signal: controller.signal,
                 });
+                setOrders(response.data);
+                console.log(response.data);
             } catch (e) {
                 console.error(e);
             }
         }
 
-        void deleteOrder();
+        void fetchOrders();
         return function cleanup() {
             controller.abort();
         }
-    }, [deleteOrder])
+    }, [selectDelete]);
 
 
+    function deleteSelected(orderId) {
+        setDelete(!selectDelete);
+        deleteOrder(orderId)
+    }
+
+
+    async function deleteOrder(id) {
+        try {
+            const response = await axios.delete(`http://localhost:8080/orders/${id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                }
+            })
+            console.log(response.data);
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
 
     return (
@@ -64,6 +63,7 @@ function AdminOrders() {
             <main>
                 <div className="inner-container">
                     <h1 className="page-title">Orders</h1>
+                    <h5>(Only accessible for administrator)</h5>
                     <br/>
                     <table className="table">
                         <thead>
@@ -83,7 +83,7 @@ function AdminOrders() {
                                 <td>{order.selectedticket}</td>
                                 <td>{order.quantity}</td>
                                 <td>{order.price}</td>
-                                <td>{order.calculateAmount}</td>
+                                <td>{order.price * order.quantity}</td>
 
                                 <Button
                                     type="submit"
@@ -93,7 +93,7 @@ function AdminOrders() {
 
                                 <Button
                                     type="submit"
-                                    onClick={(e) => deleteSelected(e, order.id)}
+                                    onClick={() => deleteSelected(order.orderid)}
                                 >delete
                                 </Button>
 
@@ -101,9 +101,6 @@ function AdminOrders() {
                         })}
                         </tbody>
                     </table>
-
-                    {deleteOrder &&
-                        <h4 >REMOVED!</h4>}
                     <br/>
                 </div>
             </main>
@@ -112,5 +109,3 @@ function AdminOrders() {
 }
 
 export default AdminOrders;
-
-

@@ -23,16 +23,17 @@ const BuyProductPage = () => {
             setLoading(true);
             try {
                 setError(false);
-                const response = await axios.get("http://localhost:8080/products/" + id, {
+                const response = await axios.get(`http://localhost:8080/products/${id}`, {
                     signal: controller.signal,
                 });
                 setData(response.data);
+
             } catch (e) {
-                //console.error(e)
+                // console.error(e)
                 setError(true)
 
                 if(axios.isCancel(e)){
-                    console.log('The axios request was cancelled')
+                    // console.log('The axios request was cancelled')
                 } else {
                     console.error(e)
                 }
@@ -52,9 +53,9 @@ const BuyProductPage = () => {
         e.preventDefault();
         try{
             const response = await axios.post('http://localhost:8080/sendMail', {
-                recipient: "",
-                message: "",
-                subject: "",
+                recipient: "@mailaddress",
+                message: "This is the Payment Link",
+                subject: "Payment",
             });
             console.log(response.data);
             setConfirm(true);
@@ -70,7 +71,7 @@ const BuyProductPage = () => {
         <>
             <main>
                 {loading && <p>Loading...</p>}
-                {error && <p>Error: Could not fetch data!</p>}
+                {error && <p></p>}
 
                 <div className="product-page-inner-container">
                     <Product
@@ -99,8 +100,8 @@ const BuyProductPage = () => {
                                 <option value="PayPal">
                                     PayPal
                                 </option>
-                                <option value="Klarna">
-                                    Klarna
+                                <option value="CreditCard">
+                                    CreditCard
                                 </option>
                                 <option value="Visa">
                                     Visa

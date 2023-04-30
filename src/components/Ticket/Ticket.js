@@ -3,7 +3,6 @@ import './Ticket.css'
 
 function Ticket({className, id, eventname, tickettype, daytype, location, eventdate, price}) {
 
-
     return (
         <>
             <div className={className}>
@@ -23,5 +22,3 @@ function Ticket({className, id, eventname, tickettype, daytype, location, eventd
 }
 
 export default Ticket;
-
-

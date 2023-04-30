@@ -3,7 +3,6 @@ import './Product.css'
 
 function Product({className, id, img, title, description, price}) {
 
-
     return (
         <>
             <div className={className}>

@@ -7,18 +7,19 @@ import Result from "../../components/Result/Result";
 import MinButton from "../../components/Button/MinButton";
 import AddButton from "../../components/Button/AddButton";
 import {ClickContext} from "../../context/ClickContext";
+import {AuthContext} from "../../context/AuthContext";
 
 
 const BookTicketPage = () => {
 
+    const {user} = useContext(AuthContext);
+    const {clicks} = useContext (ClickContext)
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [choice, toggleChoice] = useState(false)
     const [confirm, setConfirm] = useState(false);
     const [data, setData] = useState([])
-    const {clicks} = useContext (ClickContext)
     const {id} = useParams()
-
 
     function toggle() {
         toggleChoice(choice => !choice)
@@ -62,11 +63,12 @@ const BookTicketPage = () => {
     async function confirmTicketBooking(e) {
         e.preventDefault();
         try{
-            const response = await axios.post('http://localhost:8080/orders/create', {
+            const response = await axios.post(`http://localhost:8080/orders/create/${user.id}`, {
                 orderid: id,
                 selectedticket: id,
                 quantity: clicks,
                 price: price,
+                totalprice: clicks*price,
             });
             console.log(response.data);
             setConfirm(true);
@@ -83,11 +85,10 @@ const BookTicketPage = () => {
             <main>
                 <div className="ticket-page-inner-container">
                     <form onSubmit={confirmTicketBooking}>
+                        {loading && <p>Loading...</p>}
+                        {error && <p></p>}
 
-                    {loading && <p>Loading...</p>}
-                    {/*{error && <p>Error: Could not fetch data!</p>}*/}
-
-                <Ticket
+                        <Ticket
                     className="ticket-item"
                     id={id}
                     eventname={eventname}
@@ -111,7 +112,7 @@ const BookTicketPage = () => {
             <Button
                 type="button"
                 className="toggleButton"
-                clickHandler={toggle}
+                onClick={toggle}
             >Buy Ticket(s)
             </Button>
 
@@ -139,7 +140,3 @@ const BookTicketPage = () => {
 };
 
 export default BookTicketPage;
-
-
-
-
