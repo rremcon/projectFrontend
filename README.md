@@ -13,7 +13,7 @@ De .ZIP-folder bevat de volgende onderdelen:
 
 GIT links:
 
-- https://github.com/rremcon/projectFrontend
-- https://github.com/rremcon/projectBackend
+- https://github.com/rremcon/projectFrontend/tree/feature
+- https://github.com/rremcon/projectBackend/tree/feature
 
 
