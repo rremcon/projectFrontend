@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 function Picture({img, imgTitle}) {
 
     return (

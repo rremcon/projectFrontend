@@ -17,6 +17,7 @@ button {
 }
 
 .confirm-payment-button,
+.confirm-buy-button,
 .confirm-booking-button {
     color: var(--white);
     background-color: var(--blue);

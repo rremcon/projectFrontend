@@ -1,9 +1,8 @@
-import React, {useContext} from "react";
-import {ClickContext} from "../../context/ClickContext";
+import React from "react";
+import './Result.css'
 
-function Result() {
 
-    const {clicks} = useContext (ClickContext)
+function Result({clicks}) {
 
     return(
         <h2>Quantity: {clicks}</h2>

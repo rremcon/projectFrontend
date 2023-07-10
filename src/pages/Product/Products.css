@@ -1,0 +1,49 @@
+
+.grid-container {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: auto auto auto;
+  flex-grow: 0;
+  flex-shrink: 1;
+}
+
+
+.grid-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items:flex-start;
+  flex-basis: 360px;
+  flex-grow: 0;
+  flex-shrink: 1;
+  border: 1px solid;
+  border-color: var(--orange);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 10px;
+  margin: 10px;
+}
+
+.grid-box img {
+  height: 250px;
+  width: 250px;
+}
+
+
+.box-title {
+  font-size: 20px;
+  color: var(--blue);
+}
+
+.box-image {
+  height: 200px;
+  width: 200px;
+}
+
+.box-content {
+  color: var(--grey);
+}
+
+.box-price {
+  font-size: 18px;
+  color: var(--blue);
+}

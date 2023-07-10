@@ -2,29 +2,34 @@ import React, {useContext, useState} from 'react';
 import {AuthContext} from "../../context/AuthContext";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import Button from "../../components/Button/Button";
+import './HomeLogin.css'
 
 
 function HomeLogin() {
 
-    const [email, setEmail] = useState("");
-    // const [username, setUsername] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState(null)
     const navigate = useNavigate();
-    const {login} = useContext(AuthContext);
 
+    const {login} = useContext(AuthContext);
 
     async function handleSubmit(e) {
         e.preventDefault();
+
+        setErrorMessage(null)
+        if (username === ''|| password === '') {
+            setErrorMessage ("*REQUIRED FIELDS INVALID")
+            return false;
+        }
         try {
-            const response = await axios.post('http://localhost:3000/login',
-            // const response = await axios.post('http://localhost:8080/login',
+            const response = await axios.post('http://localhost:8080/login',
                 {
-                email: email,
-                // username: username,
+                username: username,
                 password: password,
             })
-            login(response.data.accessToken)
-            console.log( "TOKEN GENERATED" )
+            login(response.data.jwt)
             navigate('/account')
 
         } catch(e) {
@@ -40,30 +45,20 @@ function HomeLogin() {
                   <form onSubmit={handleSubmit}>
                       <h1 className="form-title">Welcome!</h1>
                       <br/>
-                      <label htmlFor="email-field">Email</label>
+                      <label htmlFor="username-field">*Username</label>
                       <br/>
                       <input
                           type="text"
-                          id="email-field"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          name="Email"
-                          placeholder="Email"/>
+                          id="username-field"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                          name="Username"
+                          placeholder="Username"/>
                       <br/>
-                      <label htmlFor="email-field">Email</label>
-                      {/*<br/>*/}
-                      {/*<input*/}
-                      {/*    type="text"*/}
-                      {/*    id="username-field"*/}
-                      {/*    value={username}*/}
-                      {/*    onChange={(e) => setUsername(e.target.value)}*/}
-                      {/*    name="Username"*/}
-                      {/*    placeholder="Username"/>*/}
-                      <br/>
-                      <label htmlFor="password-field">Password</label>
+                      <label htmlFor="password-field">*Password</label>
                       <br/>
                       <input
-                          type="text"
+                          type="password"
                           id="password-field"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
@@ -73,12 +68,13 @@ function HomeLogin() {
                       <br/>
                   </form>
 
-                  <button
+                  <div>{errorMessage}</div>
+                  <Button
                       className="login-button"
-                          type="submit"
-                          onClick={handleSubmit}
-                  >Login
-                  </button>
+                      type="submit"
+                      onClick={handleSubmit}
+                      visibleText="Login"
+                  />
 
               </div>
           </main>

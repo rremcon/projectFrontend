@@ -1,12 +1,12 @@
 import React, {useContext} from "react";
 import {NavLink, useNavigate} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
+import './Nav.css'
+
 
 function Nav() {
 
-    // const {isAuth, logout, user} = useContext(AuthContext);
     const {isAuth, logout} = useContext(AuthContext);
-    console.log(isAuth)
 
     const navigate = useNavigate();
 
@@ -19,6 +19,7 @@ function Nav() {
         <nav className="navbar">
             <ul>
                 <li><NavLink to="/" className={ ( { isActive } ) => isActive ? "link--active" : "link" }>Home</NavLink></li>
+                <button type="button" onClick={() => navigate('/admin')}>Admin</button>
 
             </ul>
             <ul>
@@ -32,7 +33,6 @@ function Nav() {
                     :
                     <>
                         <button type="button" onClick={() => navigate('/registration')}>Registration</button>
-                        <button type="button" onClick={() => navigate('/admin')}>Admin</button>
                     </>
                 }
             </ul>

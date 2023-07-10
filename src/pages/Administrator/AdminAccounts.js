@@ -7,82 +7,54 @@ function AdminAccounts() {
 
     const token = localStorage.getItem('token');
     const [accounts, setAccounts] = useState([]);
-    const [deleteAccount, toggleDeleteAccount] = useState(false);
-    const [id, setIdToDelete] = useState("");
+    const [selectDelete, setDelete] = useState(false);
 
 
-        useEffect(()=> {
-        async function fetchAccounts() {
-            try {
-                const response = await axios.get('http://localhost:8080/accounts');
-                setAccounts(response.data);
-                console.log(response.data);
-
-            } catch (e) {
-                console.error(e);
-            }
-        }
-        fetchAccounts();
-    }, []);
-
-
-    //
-    // useEffect(()=> {
-    //     const controller = new AbortController();
-    //     async function fetchAccounts() {
-    //         toggleDeleteAccount(false);
-    //
-    //         try {
-    //             const response = await axios.get('http://localhost:8080/accounts', {
-    //                 headers: {
-    //                     "Content-Type": "application/json",
-    //                     "Authorization": `Bearer ${token}`,
-    //                 },
-    //                 signal: controller.signal,
-    //             });
-    //             setAccounts(response.data);
-    //             console.log(response.data);
-    //         } catch (e) {
-    //             console.error(e);
-    //         }
-    //     }
-    //
-    //     void fetchAccounts();
-    //     return function cleanup() {
-    //         controller.abort();
-    //     }
-    // }, []);
-
-
-    function deleteSelected(e, accountId) {
-        e.preventDefault();
-        toggleDeleteAccount(true);
-        setIdToDelete(accountId);
-    }
-
-
-    useEffect(() => {
+    useEffect(()=> {
         const controller = new AbortController();
-        async function deleteAccount() {
+        async function fetchAccounts() {
+
             try {
-                const response = await axios.delete(`http://localhost:8080/accounts/${id}`,{
+                const response = await axios.get('http://localhost:8080/accounts', {
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${token}`,
                     },
                     signal: controller.signal,
-            });
+                });
+                setAccounts(response.data);
             } catch (e) {
                 console.error(e);
             }
         }
 
-        void deleteAccount();
+        void fetchAccounts();
         return function cleanup() {
             controller.abort();
         }
-    }, [deleteAccount])
+    }, [selectDelete]);
 
+
+    function deleteSelected(accountId) {
+        setDelete(!selectDelete);
+        deleteAccount(accountId)
+    }
+
+
+    async function deleteAccount(id) {
+
+        try {
+            const response = await axios.delete(`http://localhost:8080/accounts/${id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                }
+            })
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
 
     return (
@@ -90,6 +62,7 @@ function AdminAccounts() {
             <main>
                 <div className="inner-container">
                     <h1 className="page-title">Accounts</h1>
+                    <h5>(Only accessible for administrator)</h5>
                     <br/>
                     <table className="table">
                         <thead>
@@ -104,16 +77,12 @@ function AdminAccounts() {
                             <th>Country</th>
                             <th>Email</th>
                             <th>Username</th>
-                            {/*<th>Password</th>*/}
-                            {/*<th>Authorities</th>*/}
                         </tr>
                         </thead>
                         <tbody>
 
                         {accounts.map((account) => {
                             return <tr key={account.id}>
-                                {/*afbeelding van account tonen*/}
-                                {/*<td>{account.file && <img src={account.file.url} alt={account.name}/>}</td>*/}
                                 <td>{account.id}</td>
                                 <td>{account.firstname}</td>
                                 <td>{account.lastname}</td>
@@ -124,20 +93,18 @@ function AdminAccounts() {
                                 <td>{account.country}</td>
                                 <td>{account.email}</td>
                                 <td>{account.username}</td>
-                                {/*<td>{account.password}</td>*/}
-                                {/*<td>{account.authorities[0].authority}</td>*/}
 
                                 <Button
                                     type="submit"
                                     // onClick={(e) => changeSelected(e, account.id)}
-                                >change
-                                </Button>
+                                    visibleText="change"
+                                />
 
                                 <Button
                                     type="submit"
-                                    onClick={(e) => deleteSelected(e, account.id)}
-                                >delete
-                                </Button>
+                                    onClick={() => deleteSelected(account.id)}
+                                visibleText="delete"
+                                />
 
                             </tr>
                         })}

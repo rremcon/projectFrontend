@@ -1,8 +1,8 @@
 import React from 'react';
 import './Product.css'
 
-function Product({className, id, img, title, description, price}) {
 
+function Product({className, id, img, title, description, price}) {
 
     return (
         <>

@@ -2,9 +2,18 @@ import React, {useContext, useState} from 'react';
 import Button from "../../components/Button/Button";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
+import {useNavigate} from "react-router-dom";
+import './Registration.css'
 
 
 function Registration() {
+
+    const {login} = useContext(AuthContext)
+    const [file, setFile] = useState([]);
+    const [previewUrl, setPreviewUrl] = useState('');
+    const navigate = useNavigate();
+    const [confirm, setConfirm] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null)
 
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
@@ -17,17 +26,18 @@ function Registration() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const { login } = useContext(AuthContext)
-    const [file, setFile] = useState([]);
-    const [previewUrl, setPreviewUrl] = useState('');
 
     async function registerUser(e) {
         e.preventDefault()
-        try{
-            const response = await axios.post('http://localhost:3000/register', {
-            // const response = await axios.post('http://localhost:8080/accounts/register', {
-            // const response = await axios.post('http://localhost:8080/users/register', {
-            // const response = await axios.post('http://localhost:8080/users/accounts/register', {
+
+        setErrorMessage(null)
+        if (username === ''|| password === '' || email === '') {
+            setErrorMessage ("*REQUIRED FIELDS INVALID")
+                return false;
+        }
+
+            try{
+            const response = await axios.post('http://localhost:8080/users/register', {
                 firstname: firstname,
                 lastname: lastname,
                 birthdate: birthdate,
@@ -39,9 +49,8 @@ function Registration() {
                 username: username,
                 password: password,
             })
-
-            login(response.data.accessToken)
-            console.log("USER REGISTRATED")
+            // login(response.data.jwt)
+            navigate('/')
 
         } catch (e) {
             console.error(e)
@@ -51,7 +60,6 @@ function Registration() {
 
     function handleImageChange(e) {
         const uploadedFile = e.target.files[0];
-        console.log(uploadedFile);
         setFile(uploadedFile);
         setPreviewUrl(URL.createObjectURL(uploadedFile));
     }
@@ -63,12 +71,11 @@ function Registration() {
         formData.append("file", file);
         try{
             const result = await axios.post('http://localhost:8080/upload', formData,{
-            // const result = await axios.post('http://localhost:8080/accounts/0/photo', formData,{
                 headers: {
                     "Content-Type": "multipart/form-data"
                 },
             })
-            console.log(result.data);
+            setConfirm(true);
 
         } catch (e) {
             console.error(e)
@@ -81,13 +88,13 @@ function Registration() {
             const formData = new FormData();
             formData.append("file", file);
             try{
-                const result = await axios.get('http://localhost:8080/download/{fileName}', formData,{
-                // const result = await axios.get('http://localhost:8080/download/image0.jpeg', formData,{
+                // const result = await axios.get('http://localhost:8080/download/{fileName}', formData,{
+                const result = await axios.get('http://localhost:8080/download/image0.jpeg', formData,{
                         headers: {
                             "Content-Type": "multipart/form-data"
                         },
                     })
-                    console.log(result.data);
+                setConfirm(true);
 
                 } catch (e) {
                     console.error(e)
@@ -122,7 +129,7 @@ function Registration() {
                         name="lastname"
                         placeholder="Lastname"/>
                     <br/>
-                    <label htmlFor="birthdate-field">Birthdate</label>
+                    <label htmlFor="birthdate-field">Birthdate (yyyy-mm-dd)</label>
                     <br/>
                     <input
                         type="text"
@@ -174,7 +181,7 @@ function Registration() {
                     <br/>
                     <br/>
                     <br/>
-                    <label htmlFor="email-field">Email</label>
+                    <label htmlFor="email-field">*Email</label>
                     <br/>
                     <input
                         type="email"
@@ -184,7 +191,7 @@ function Registration() {
                         name="email"
                         placeholder="Email"/>
                     <br/>
-                    <label htmlFor="username-field">Username</label>
+                    <label htmlFor="username-field">*Username</label>
                     <br/>
                     <input
                         type="text"
@@ -194,7 +201,7 @@ function Registration() {
                         name="username"
                         placeholder="Username"/>
                     <br/>
-                    <label htmlFor="choose-password-field">Password</label>
+                    <label htmlFor="choose-password-field">*Password</label>
                     <br/>
                     <input
                         type="password"
@@ -207,21 +214,20 @@ function Registration() {
                     <br/>
                 </form>
 
-                <button
+                <div>{errorMessage}</div>
+                <Button
                     className="sign-up-button"
                     type="submit"
                     onClick={registerUser}
-                >Sign Up
-                </button>
+                    visibleText="Sign Up"
+              />
 
 
             </div>
                 <br/>
                 <br/>
                 <div>
-                    <h4>Upload your profile picture here!</h4>
                     <form onSubmit={sendImage}>
-                    {/*<form onSubmit={registerUser}>*/}
                         <label htmlFor="account-image">
                             Choose picture
                             <input type="file" name="account-image-field" id="account-image-upload" onChange={handleImageChange}/>
@@ -237,17 +243,16 @@ function Registration() {
                         <Button
                             type="submit"
                             onClick={sendImage}
-                        >Upload
-                        </Button>
+                            visibleText="Upload"
+                        />
+                        {confirm === true && <p>Nice!</p>}
 
                     </form>
                 </div>
                 <br/>
                 <br/>
                 <div>
-                    <h4>Download your profile picture here!</h4>
                     <form onSubmit={getImage}>
-                        {/*<form onSubmit={registerUser}>*/}
                         <label htmlFor="account-image">
                             Choose picture
                             <input type="file" name="account-image-field" id="account-image-download" onChange={handleImageChange}/>
@@ -259,12 +264,11 @@ function Registration() {
                                      className="image-preview"/>
                             </label>
                         }
-
                         <Button
                             type="submit"
                             onClick={getImage}
-                        >Download
-                        </Button>
+                            visibleText="Download"
+                        />
 
                     </form>
                 </div>

@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import Picture from "../../components/Picture/Picture";
+import Button from "../../components/Button/Button";
+import './Products.css'
 
 
 const Products = () => {
@@ -20,15 +23,12 @@ const Products = () => {
                     signal: controller.signal,
             });
                 setProducts(response.data);
-                console.log(response.data);
-
 
             } catch (e) {
-                //console.error(e)
+                console.error(e)
                 setError(true)
 
                 if(axios.isCancel(e)){
-                    console.log('The axios request was cancelled')
                 } else {
                     console.error(e)
                 }
@@ -47,7 +47,7 @@ const Products = () => {
         <>
             <main>
             {loading && <p>Loading...</p>}
-            {error && <p>Error: Could not fetch data!</p>}
+            {error && <p></p>}
 
             <h1 className="page-title">Buy Products</h1>
             <div className="grid-container">
@@ -57,7 +57,10 @@ const Products = () => {
                             <article className="grid-box"
                                 key={product.id}>
                                 <Link to={`/product/${product.id}`}>
-                                    <img className="box-image" src={product.img} alt={product.title}/>
+                                    <Picture
+                                        img={product.img}
+                                        imgTitle={product.title}
+                                    />
                                     <div className="grid-box-content">
                                     <h3 className="box-title">
                                         {product.title.slice(0, 25)}</h3>
@@ -68,10 +71,11 @@ const Products = () => {
                                         <span className="box-price">€{product.price}</span>
                                         <br/>
 
-                                        <button
+                                        <Button
                                             className="buy-button"
-                                        >Buy
-                                        </button>
+                                            type="button"
+                                            visibleText="Buy"
+                                        />
                                     </div>
                                 </Link>
                             </article>

@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Link} from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 
 function AdminPage() {
-
 
     return (
         <>
@@ -12,34 +12,34 @@ function AdminPage() {
                     <h1 className="page-title">Admin Portal</h1>
                     <br/>
                     <Link to={`/admin/accounts`}>
-                        <button
-                            type="button">
-                            get accounts
-                        </button>
+                        <Button
+                            type="button"
+                            visibleText="get accounts"
+                        />
                     </Link>
                     <br/>
                     <br/>
                     <Link to={`/admin/orders`}>
-                        <button
-                            type="button">
-                            get orders
-                        </button>
+                        <Button
+                            type="button"
+                            visibleText="get orders"
+                        />
                     </Link>
                     <br/>
                     <br/>
                     <Link to={`/admin/tickets`}>
-                        <button
-                            type="button">
-                            get tickets
-                        </button>
+                        <Button
+                            type="button"
+                            visibleText="get tickets"
+                        />
                     </Link>
                     <br/>
                     <br/>
                     <Link to={`/admin/add/ticket`}>
-                        <button
-                            type="button">
-                            Add ticket
-                        </button>
+                        <Button
+                            type="button"
+                            visibleText="Add ticket"
+                        />
                     </Link>
                 </div>
             </main>
