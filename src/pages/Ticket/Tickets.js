@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
+import Button from "../../components/Button/Button";
+import './Tickets.css'
 
 
 function Tickets() {
@@ -12,7 +14,6 @@ function Tickets() {
             try {
                 const response = await axios.get('http://localhost:8080/tickets');
                 setTickets(response.data);
-                console.log(response.data);
 
             } catch (e) {
                 console.error(e);
@@ -53,13 +54,12 @@ function Tickets() {
                                 <td>€{ticket.price}</td>
 
                                 <Link to={`/ticket/${ticket.id}`}>
-                                <button
+                                <Button
                                     className="select-button"
-                                    type="submit"
-                                >select
-                                </button>
+                                    type="button"
+                                    visibleText="select"
+                                />
                                 </Link>
-
                             </tr>
                         })}
                         </tbody>

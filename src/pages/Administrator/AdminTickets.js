@@ -5,56 +5,56 @@ import Button from "../../components/Button/Button";
 
 function AdminTickets() {
 
+    const token = localStorage.getItem('token');
     const [tickets, setTickets] = useState([]);
-    const [deleteTicket, toggleDeleteTicket] = useState(false);
-    const [id, setIdToDelete] = useState("");
+    const [selectDelete, setDelete] = useState(false);
 
 
     useEffect(()=> {
-        async function fetchTickets() {
-            try {
-                const response = await axios.get('http://localhost:8080/tickets');
-                setTickets(response.data);
-                console.log(response.data);
-
-            } catch (e) {
-                console.error(e);
-            }
-        }
-
-        fetchTickets();
-    }, []);
-
-
-
-    function deleteSelected(e, id) {
-        e.preventDefault();
-        toggleDeleteTicket(true);
-        setIdToDelete(id);
-    }
-
-    useEffect(() => {
         const controller = new AbortController();
-        async function deleteTicket() {
+        async function fetchTickets() {
+
             try {
-                const response = await axios.delete(`http://localhost:8080/tickets/${id}`, {
-                    id: id,
+                const response = await axios.get('http://localhost:8080/tickets/admin', {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`,
+                    },
                     signal: controller.signal,
                 });
-                setIdToDelete(response.data);
-                console.log(response.data);
+                setTickets(response.data);
 
             } catch (e) {
                 console.error(e);
             }
         }
 
-        void deleteTicket();
+        void fetchTickets();
         return function cleanup() {
             controller.abort();
         }
-    }, [deleteTicket])
+    }, [selectDelete]);
 
+
+    function deleteSelected(ticketId) {
+        setDelete(!selectDelete);
+        deleteTicket(ticketId)
+    }
+
+
+    async function deleteTicket(id) {
+        try {
+            const response = await axios.delete(`http://localhost:8080/tickets/${id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                }
+            })
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
 
     return (
@@ -62,6 +62,7 @@ function AdminTickets() {
             <main>
                 <div className="inner-container">
                     <h1 className="page-title">Tickets</h1>
+                    <h5>(Only accessible for administrator)</h5>
                     <br/>
                     <table className="table">
                         <thead>
@@ -90,14 +91,14 @@ function AdminTickets() {
                                 <Button
                                     type="submit"
                                     // onClick={(e) => changeSelected(e, ticket.id)}
-                                >change
-                                </Button>
+                                    visibleText="change"
+                                />
 
                                 <Button
                                     type="submit"
-                                    onClick={(e) => deleteSelected(e, ticket.id)}
-                                >delete
-                                </Button>
+                                    onClick={() => deleteSelected(ticket.id)}
+                                    visibleText="delete"
+                                />
 
                             </tr>
                         })}

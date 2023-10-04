@@ -1,8 +1,8 @@
 import React from 'react';
 import './Product.css'
 
+//PRODUCT COMPONENT WORDT (NOG) NERGENS GEBRUIKT!?
 function Product({className, id, img, title, description, price}) {
-
 
     return (
         <>

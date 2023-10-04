@@ -7,56 +7,53 @@ function AdminOrders() {
 
     const token = localStorage.getItem('token');
     const [orders, setOrders] = useState([]);
-    const [deleteOrder, toggleDeleteOrder] = useState(false);
-    const [id, setIdToDelete] = useState("");
+    const [selectDelete, setDelete] = useState(false);
 
 
     useEffect(()=> {
-
-        async function fetchOrders() {
-            try {
-                const response = await axios.get('http://localhost:8080/orders');
-                setOrders(response.data);
-                console.log(response.data);
-
-            } catch (e) {
-                console.error(e);
-            }
-        }
-        fetchOrders();
-    }, []);
-
-
-    function deleteSelected(e, orderId) {
-        e.preventDefault();
-        toggleDeleteOrder(true);
-        setIdToDelete(orderId);
-    }
-
-
-    useEffect(() => {
         const controller = new AbortController();
-        async function deleteOrder() {
+        async function fetchOrders() {
+
             try {
-                const response = await axios.delete(`http://localhost:8080/accounts/${id}`,{
+                const response = await axios.get('http://localhost:8080/orders', {
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": `Bearer ${token}`,
                     },
                     signal: controller.signal,
                 });
+                setOrders(response.data);
             } catch (e) {
                 console.error(e);
             }
         }
 
-        void deleteOrder();
+        void fetchOrders();
         return function cleanup() {
             controller.abort();
         }
-    }, [deleteOrder])
+    }, [selectDelete]);
 
 
+    function deleteSelected(orderId) {
+        setDelete(!selectDelete);
+        deleteOrder(orderId)
+    }
+
+
+    async function deleteOrder(id) {
+        try {
+            const response = await axios.delete(`http://localhost:8080/orders/${id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                }
+            })
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
 
     return (
@@ -64,12 +61,13 @@ function AdminOrders() {
             <main>
                 <div className="inner-container">
                     <h1 className="page-title">Orders</h1>
+                    <h5>(Only accessible for administrator)</h5>
                     <br/>
                     <table className="table">
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>TicketId</th>
+                            <th>ItemId</th>
                             <th>Quantity</th>
                             <th>Price</th>
                             <th>TotalPrice</th>
@@ -80,30 +78,27 @@ function AdminOrders() {
                         {orders.map((order) => {
                             return <tr key={order.id}>
                                 <td>{order.orderid}</td>
-                                <td>{order.selectedticket}</td>
+                                <td>{order.selecteditem}</td>
                                 <td>{order.quantity}</td>
                                 <td>{order.price}</td>
-                                <td>{order.calculateAmount}</td>
+                                <td>{order.price * order.quantity}</td>
 
                                 <Button
                                     type="submit"
                                     // onClick={(e) => changeSelected(e, order.id)}
-                                >change
-                                </Button>
+                                    visibleText="change"
+                                />
 
                                 <Button
                                     type="submit"
-                                    onClick={(e) => deleteSelected(e, order.id)}
-                                >delete
-                                </Button>
+                                    onClick={() => deleteSelected(order.orderid)}
+                                    visibleText="delete"
+                                />
 
                             </tr>
                         })}
                         </tbody>
                     </table>
-
-                    {deleteOrder &&
-                        <h4 >REMOVED!</h4>}
                     <br/>
                 </div>
             </main>
@@ -112,5 +107,3 @@ function AdminOrders() {
 }
 
 export default AdminOrders;
-
-

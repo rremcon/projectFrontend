@@ -4,26 +4,26 @@ import {useParams} from "react-router-dom";
 import Button from "../../components/Button/Button";
 import Ticket from "../../components/Ticket/Ticket";
 import Result from "../../components/Result/Result";
-import MinButton from "../../components/Button/MinButton";
-import AddButton from "../../components/Button/AddButton";
 import {ClickContext} from "../../context/ClickContext";
+import {AuthContext} from "../../context/AuthContext";
+import './BookTicketPage.css'
 
 
 const BookTicketPage = () => {
+
+    const {user} = useContext(AuthContext);
+    const {minOneFunction, plusOneFunction, clicks} = useContext(ClickContext)
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
     const [choice, toggleChoice] = useState(false)
     const [confirm, setConfirm] = useState(false);
     const [data, setData] = useState([])
-    const {clicks} = useContext (ClickContext)
     const {id} = useParams()
-
 
     function toggle() {
         toggleChoice(choice => !choice)
     }
-    console.log(choice)
 
 
     useEffect(() => {
@@ -36,14 +36,12 @@ const BookTicketPage = () => {
                     signal: controller.signal,
                 });
                 setData(response.data);
-                console.log(response.data);
 
             } catch (e) {
-                // console.error(e)
+                console.error(e)
                 setError(true)
 
                 if(axios.isCancel(e)){
-                    // console.log('The axios request was cancelled')
                 } else {
                     console.error(e)
                 }
@@ -62,13 +60,13 @@ const BookTicketPage = () => {
     async function confirmTicketBooking(e) {
         e.preventDefault();
         try{
-            const response = await axios.post('http://localhost:8080/orders/create', {
+            const response = await axios.post(`http://localhost:8080/orders/${user.id}`, {
                 orderid: id,
-                selectedticket: id,
+                selecteditem: id,
                 quantity: clicks,
                 price: price,
+                totalprice: clicks*price,
             });
-            console.log(response.data);
             setConfirm(true);
 
         } catch(e) {
@@ -83,11 +81,10 @@ const BookTicketPage = () => {
             <main>
                 <div className="ticket-page-inner-container">
                     <form onSubmit={confirmTicketBooking}>
+                        {loading && <p>Loading...</p>}
+                        {error && <p></p>}
 
-                    {loading && <p>Loading...</p>}
-                    {/*{error && <p>Error: Could not fetch data!</p>}*/}
-
-                <Ticket
+                        <Ticket
                     className="ticket-item"
                     id={id}
                     eventname={eventname}
@@ -100,20 +97,39 @@ const BookTicketPage = () => {
             <br/>
             <br/>
             <div className="ticket-handling">
-                <MinButton/>
+
+                <Button
+                    type="button"
+                    className="quantity-button"
+                    onClick={minOneFunction}
+                    disabled={clicks === 0}
+                    visibleText="-"
+                />
+
                 <br/>
-                <AddButton/>
-                <Result/>
-            <br/>
+
+                <Button
+                    type="button"
+                    className="quantity-button"
+                    onClick={plusOneFunction}
+                    disabled={clicks === 6}
+                    visibleText="+"
+                />
+
+                <Result
+                clicks={clicks}
+                />
+
+                <br/>
             <br/>
             { choice? <p></p> : <p></p>}
 
             <Button
                 type="button"
                 className="toggleButton"
-                clickHandler={toggle}
-            >Buy Ticket(s)
-            </Button>
+                onClick={toggle}
+                visibleText="Buy Ticket(s)"
+            />
 
             <input
                 type="checkbox"
@@ -126,9 +142,9 @@ const BookTicketPage = () => {
                 className="confirm-booking-button"
                 type="submit"
                 onClick={confirmTicketBooking}
-            >Confirm Booking
+                visibleText="Confirm Booking"
+            />
                 {confirm === true && <p>Booking Confirmed!</p>}
-            </Button>
 
                 </div>
                     </form>
@@ -139,7 +155,3 @@ const BookTicketPage = () => {
 };
 
 export default BookTicketPage;
-
-
-
-

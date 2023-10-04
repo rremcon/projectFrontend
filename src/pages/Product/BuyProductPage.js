@@ -1,11 +1,15 @@
-import React, {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
+import React, {useContext, useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 import axios from "axios";
 import Product from "../../components/Product/Product";
 import Button from "../../components/Button/Button";
+import './BuyProductPage.css'
+import {AuthContext} from "../../context/AuthContext";
 
 
 const BuyProductPage = () => {
+
+    const {user} = useContext(AuthContext);
 
     const [paytype, setSelectedPay] = useState('');
     const [confirm, setConfirm] = useState(false);
@@ -13,7 +17,6 @@ const BuyProductPage = () => {
     const [error, setError] = useState(false);
     const [data, setData] = useState([])
     const {id} = useParams()
-    console.log(id)
 
 
     useEffect(() => {
@@ -23,16 +26,16 @@ const BuyProductPage = () => {
             setLoading(true);
             try {
                 setError(false);
-                const response = await axios.get("http://localhost:8080/products/" + id, {
+                const response = await axios.get(`http://localhost:8080/products/${id}`, {
                     signal: controller.signal,
                 });
                 setData(response.data);
+
             } catch (e) {
-                //console.error(e)
+                console.error(e)
                 setError(true)
 
                 if(axios.isCancel(e)){
-                    console.log('The axios request was cancelled')
                 } else {
                     console.error(e)
                 }
@@ -47,16 +50,31 @@ const BuyProductPage = () => {
     }, [id])
 
 
-
     async function confirmPayment(e) {
         e.preventDefault();
         try{
             const response = await axios.post('http://localhost:8080/sendMail', {
-                recipient: "",
-                message: "",
-                subject: "",
+                recipient: "@mailaddress",
+                message: "This is the Payment Link",
+                subject: "Payment",
             });
-            console.log(response.data);
+            setConfirm(true);
+
+        } catch(e) {
+            console.error(e);
+        }
+    }
+
+
+    async function confirmBuyProduct(e) {
+        e.preventDefault();
+        try{
+            const response = await axios.post(`http://localhost:8080/orders/${user.id}`, {
+                orderid: id,
+                selecteditem: id,
+                price: price,
+                totalprice: price,
+            });
             setConfirm(true);
 
         } catch(e) {
@@ -70,7 +88,7 @@ const BuyProductPage = () => {
         <>
             <main>
                 {loading && <p>Loading...</p>}
-                {error && <p>Error: Could not fetch data!</p>}
+                {error && <p></p>}
 
                 <div className="product-page-inner-container">
                     <Product
@@ -99,8 +117,8 @@ const BuyProductPage = () => {
                                 <option value="PayPal">
                                     PayPal
                                 </option>
-                                <option value="Klarna">
-                                    Klarna
+                                <option value="CreditCard">
+                                    CreditCard
                                 </option>
                                 <option value="Visa">
                                     Visa
@@ -112,10 +130,24 @@ const BuyProductPage = () => {
                             className="confirm-payment-button"
                             type="submit"
                             onClick={confirmPayment}
-                        >Confirm Payment
-                            {confirm === true && <p>Check your mailbox!</p>}
-                        </Button>
-                    </form>
+                            disabled={true}
+                            visibleText="Confirm Payment"
+                        />
+                        {confirm === true && <p>Check your mailbox!</p>}
+
+                        <br/>
+                        <br/>
+
+                        <Button
+                            className="confirm-buy-button"
+                            type="submit"
+                            onClick={confirmBuyProduct}
+                            visibleText="Confirm Buy"
+                        />
+                        {confirm === true && <p>Confirmed.</p>}
+
+                </form>
+
                 </div>
             </main>
         </>

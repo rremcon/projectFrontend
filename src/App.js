@@ -50,8 +50,7 @@ function App() {
               <Route path="/products" element={<Products/>} />
               <Route path="/product/:id" element={<BuyProductPage/>}/>
 
-              {/*<Route path="/admin" element={ isAuth ? <AdminPage/> : <Navigate to="/"/>} />*/}
-              <Route path="/admin" element={<AdminPage/>} />
+              <Route path="/admin" element={ isAuth ? <AdminPage/> : <Navigate to="/"/>} />
               <Route path="/admin/accounts" element={<AdminAccounts/>} />
               <Route path="/admin/orders" element={<AdminOrders/>} />
               <Route path="/admin/tickets" element={<TicketsAdmin/>} />

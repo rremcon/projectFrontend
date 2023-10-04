@@ -20,7 +20,6 @@ const NotFoundPage = () => {
                 <h3>Not Found | 404</h3>
             </>
         );
-
 };
 
 export default NotFoundPage;

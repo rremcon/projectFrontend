@@ -9,13 +9,11 @@ function ClickContextProvider({children}) {
 
     function plusOne() {
         setCounter(amountOfClicks +1)
-        console.log('+1')
     }
 
 
     function minOne() {
         setCounter(amountOfClicks -1)
-        console.log('-1')
     }
 
 
