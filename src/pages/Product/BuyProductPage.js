@@ -57,6 +57,7 @@ const BuyProductPage = () => {
                 recipient: "@mailaddress",
                 message: "This is the Payment Link",
                 subject: "Payment",
+                // attachment: "C:/users/skikk/downloads/mvwc.jpg"
             });
             setConfirm(true);
 

@@ -3,8 +3,10 @@ import {Link} from "react-router-dom";
 import axios from "axios";
 import Picture from "../../components/Picture/Picture";
 import Button from "../../components/Button/Button";
+import Product from "../../components/Product/Product";
 import './Products.css'
 
+//PRODUCT COMPONENT WORDT (NOG) NERGENS GEBRUIKT!?
 
 const Products = () => {
 
@@ -76,6 +78,28 @@ const Products = () => {
                                             type="button"
                                             visibleText="Buy"
                                         />
+
+
+                                        {/*<Product/>*/}
+                                        {/*<Product/>*/}
+                                        {/*<Product/>*/}
+                                        {/*<Product/>*/}
+                                        {/*<Product/>*/}
+                                        {/*<Product/>*/}
+                                        {/*<Product/>*/}
+                                        {/*<Product/>*/}
+
+                                        {/*<Product*/}
+                                        {/*    title="productexample"*/}
+                                        {/*    description="productdescriptionexample"*/}
+                                        {/*/>*/}
+
+                                        {/*<Product*/}
+                                        {/*    title="productexample"*/}
+                                        {/*    description="productdescriptionexample"*/}
+                                        {/*/>*/}
+
+
                                     </div>
                                 </Link>
                             </article>
