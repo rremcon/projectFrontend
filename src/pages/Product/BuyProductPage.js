@@ -87,68 +87,73 @@ const BuyProductPage = () => {
     const {img, title, description, price} = data;
     return (
         <>
-            <main>
+            <main className="outer-content-container">
                 {loading && <p>Loading...</p>}
                 {error && <p></p>}
 
-                <div className="product-page-inner-container">
-                    <Product
-                        className="product-item"
-                        id={id}
-                        img={img}
-                        title={title}
-                        description={description}
-                        price={price}
-                    />
+                <div className="inner-content-container">
+                    <h1 className="page-title-sold-out">SOLD OUT!</h1>
 
-                    <form className="form-container-payment" onSubmit={confirmPayment}>
-                        <h1 className="form-title">Payment</h1>
-                        <br/>
-                        <label htmlFor="pay-type-selection">
-                            <h4>Select Pay:</h4>
-                            <select
-                                id="pay-type-choice"
-                                name="pay-type-choice-field"
-                                value={paytype}
-                                onChange={(e) => setSelectedPay(e.target.value)}
-                            >
-                                <option value="IDeal">
-                                    IDeal
-                                </option>
-                                <option value="PayPal">
-                                    PayPal
-                                </option>
-                                <option value="CreditCard">
-                                    CreditCard
-                                </option>
-                                <option value="Visa">
-                                    Visa
-                                </option>
-                            </select>
-                        </label>
-                        <br/>
-                        <Button
-                            className="confirm-payment-button"
-                            type="submit"
-                            onClick={confirmPayment}
-                            disabled={true}
-                            visibleText="Confirm Payment"
+                    <div className="buy-product-container">
+
+                        <Product
+                            className="product-tile"
+                            id={id}
+                            img={img}
+                            title={title}
+                            description={description}
+                            price={price}
                         />
-                        {confirm === true && <p>Check your mailbox!</p>}
 
-                        <br/>
-                        <br/>
+                        <form className="form-container-payment" onSubmit={confirmPayment}>
+                            <h1 className="form-title">Payment</h1>
+                            <br/>
+                            <label htmlFor="pay-type-selection">
+                                <h4>Select Pay:</h4>
+                                <select
+                                    id="pay-type-choice"
+                                    name="pay-type-choice-field"
+                                    value={paytype}
+                                    onChange={(e) => setSelectedPay(e.target.value)}
+                                >
+                                    <option value="IDeal">
+                                        IDeal
+                                    </option>
+                                    <option value="PayPal">
+                                        PayPal
+                                    </option>
+                                    <option value="CreditCard">
+                                        CreditCard
+                                    </option>
+                                    <option value="Visa">
+                                        Visa
+                                    </option>
+                                </select>
+                            </label>
+                            <br/>
+                            <Button
+                                className="confirm-payment-button"
+                                type="submit"
+                                onClick={confirmPayment}
+                                disabled={true}
+                                visibleText="Confirm Payment"
+                            />
+                            {confirm === true && <p>Check your mailbox!</p>}
 
-                        <Button
-                            className="confirm-buy-button"
-                            type="submit"
-                            onClick={confirmBuyProduct}
-                            visibleText="Confirm Buy"
-                        />
-                        {confirm === true && <p>Confirmed.</p>}
+                            <br/>
+                            <br/>
 
-                </form>
+                            <Button
+                                className="confirm-buy-button"
+                                type="submit"
+                                onClick={confirmBuyProduct}
+                                visibleText="Confirm Buy"
+                            />
+                            {confirm === true && <p><strong className="confirmation-not"><em>NOT</em></strong> Confirmed.</p>}
 
+                        </form>
+
+                    </div>
                 </div>
             </main>
         </>

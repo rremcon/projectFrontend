@@ -6,15 +6,20 @@ button {
   border-color: var(--orange);
 }
 
+.buy-button {
+    background-color: lightblue;
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
-.buy-button,
+.select-button,
 .sign-up-button,
 .login-button,
-.select-button,
 .quantity-button,
 .toggleButton {
     background-color: lightblue;
 }
+
 
 .confirm-payment-button,
 .confirm-buy-button,

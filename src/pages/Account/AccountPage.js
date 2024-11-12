@@ -9,8 +9,8 @@ import './Accountpage.css'
 
         return (
         <>
-            <main>
-            <div className="account-page">
+            <main className="outer-content-container">
+            <div className="inner-content-container">
             <h1 className="page-title">Account</h1>
                 <br/>
                 <br/>

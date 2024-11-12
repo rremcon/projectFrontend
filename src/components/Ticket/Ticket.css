@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: center;
     width: 200px;
-    height: 250px;
+    height: 300px;
     background-color: grey;
     margin-top: 1em;
     margin-bottom: 1em;
@@ -19,4 +19,5 @@
 
 .ticket-item span {
     font-size: 25px;
+    color: var(--blue);
 }

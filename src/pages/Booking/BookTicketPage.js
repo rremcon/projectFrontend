@@ -78,76 +78,85 @@ const BookTicketPage = () => {
     const {eventname, tickettype, daytype, location, eventdate, price} = data;
     return (
         <>
-            <main>
-                <div className="ticket-page-inner-container">
-                    <form onSubmit={confirmTicketBooking}>
-                        {loading && <p>Loading...</p>}
-                        {error && <p></p>}
+            <main className="outer-content-container">
+                {loading && <p>Loading...</p>}
+                {error && <p></p>}
+
+                <div className="inner-content-container">
+                    <h1 className="page-title-sold-out">SOLD OUT!</h1>
+
+                    <div className="book-ticket-container">
 
                         <Ticket
-                    className="ticket-item"
-                    id={id}
-                    eventname={eventname}
-                    tickettype={tickettype}
-                    daytype={daytype}
-                    location={location}
-                    eventdate={eventdate}
-                    price={price}
-                />
-            <br/>
-            <br/>
-            <div className="ticket-handling">
+                            className="ticket-item"
+                            id={id}
+                            eventname={eventname}
+                            tickettype={tickettype}
+                            daytype={daytype}
+                            location={location}
+                            eventdate={eventdate}
+                            price={price}
+                        />
+                        <br/>
+                        <br/>
 
-                <Button
-                    type="button"
-                    className="quantity-button"
-                    onClick={minOneFunction}
-                    disabled={clicks === 0}
-                    visibleText="-"
-                />
+                        <form className="form-container-ticket-handling" onSubmit={confirmTicketBooking}>
 
-                <br/>
+                            {/*<div className="ticket-handling">*/}
 
-                <Button
-                    type="button"
-                    className="quantity-button"
-                    onClick={plusOneFunction}
-                    disabled={clicks === 6}
-                    visibleText="+"
-                />
+                            <Button
+                                type="button"
+                                className="quantity-button"
+                                onClick={minOneFunction}
+                                disabled={clicks === 0}
+                                visibleText="-"
+                            />
 
-                <Result
-                clicks={clicks}
-                />
+                            <br/>
 
-                <br/>
-            <br/>
-            { choice? <p></p> : <p></p>}
+                            <Button
+                                type="button"
+                                className="quantity-button"
+                                onClick={plusOneFunction}
+                                disabled={clicks === 6}
+                                visibleText="+"
+                            />
 
-            <Button
-                type="button"
-                className="toggleButton"
-                onClick={toggle}
-                visibleText="Buy Ticket(s)"
-            />
+                            <Result
+                                clicks={clicks}
+                            />
 
-            <input
-                type="checkbox"
-                checked={choice}
-                onChange={(e) => {toggleChoice(e.target.checked)}}
-            />
-            <br/>
+                            <br/>
+                            <br/>
+                            {choice ? <p></p> : <p></p>}
 
-            <Button
-                className="confirm-booking-button"
-                type="submit"
-                onClick={confirmTicketBooking}
-                visibleText="Confirm Booking"
-            />
-                {confirm === true && <p>Booking Confirmed!</p>}
+                            <Button
+                                type="button"
+                                className="toggleButton"
+                                onClick={toggle}
+                                visibleText="Buy Ticket(s)"
+                            />
 
-                </div>
-                    </form>
+                            <input
+                                type="checkbox"
+                                checked={choice}
+                                onChange={(e) => {
+                                    toggleChoice(e.target.checked)
+                                }}
+                            />
+                            <br/>
+
+                            <Button
+                                className="confirm-booking-button"
+                                type="submit"
+                                onClick={confirmTicketBooking}
+                                visibleText="Confirm Booking"
+                            />
+                            {confirm === true && <p>Booking <strong className="confirmation-not"><em>NOT</em></strong> Confirmed!</p>}
+
+                            {/*</div>*/}
+                        </form>
+                    </div>
                 </div>
             </main>
         </>

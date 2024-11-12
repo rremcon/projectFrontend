@@ -16,6 +16,7 @@ function HomeLogin() {
     const {login} = useContext(AuthContext);
 
     async function handleSubmit(e) {
+        // voorkom refresh
         e.preventDefault();
 
         setErrorMessage(null)
@@ -40,45 +41,51 @@ function HomeLogin() {
 
   return (
       <>
-          <main>
-              <div className="form-container">
-                  <form onSubmit={handleSubmit}>
-                      <h1 className="form-title">Welcome!</h1>
-                      <br/>
-                      <label htmlFor="username-field">*Username</label>
-                      <br/>
-                      <input
-                          type="text"
-                          id="username-field"
-                          value={username}
-                          onChange={(e) => setUsername(e.target.value)}
-                          name="Username"
-                          placeholder="Username"/>
-                      <br/>
-                      <label htmlFor="password-field">*Password</label>
-                      <br/>
-                      <input
-                          type="password"
-                          id="password-field"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          name="password"
-                          placeholder="Password"/>
-                      <br/>
-                      <br/>
-                  </form>
+          <main className="outer-content-container">
+              <div className="inner-content-container">
 
-                  <div>{errorMessage}</div>
-                  <Button
-                      className="login-button"
-                      type="submit"
-                      onClick={handleSubmit}
-                      visibleText="Login"
-                  />
+                  <div className="form-container">
+                      <form className="form" onSubmit={handleSubmit}>
+                          <h1 className="form-title">Welcome!</h1>
+                          <br/>
+                          {/*<br/>*/}
+                          {/*<label htmlFor="username-field">*Username</label>*/}
+                          {/*<br/>*/}
+                          <input
+                              type="text"
+                              id="username-field"
+                              value={username}
+                              onChange={(e) => setUsername(e.target.value)}
+                              name="Username"
+                              placeholder="Username"/>
+                          {/*<br/>*/}
+                          {/*<label htmlFor="password-field">*Password</label>*/}
+                          {/*<br/>*/}
+                          <input
+                              type="password"
+                              id="password-field"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              name="password"
+                              placeholder="Password"/>
+                          <br/>
+                          {/*<br/>*/}
 
+                          <div>{errorMessage}</div>
+
+                          <Button
+                              className="login-button"
+                              type="submit"
+                              onClick={handleSubmit}
+                              visibleText="Login"
+                          />
+
+                      </form>
+
+                  </div>
               </div>
           </main>
-          </>
+      </>
   );
 }
 

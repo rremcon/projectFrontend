@@ -2,17 +2,32 @@
 .navbar {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    /*align-items: center;*/
     background-color: var(--black);
     padding: 10px;
-    font-size: 12px;
-    line-height: 20px;
+    /*font-size: 12px;*/
+    /*line-height: 20px;*/
     font-family: sans-serif;
     color: var(--white);
     flex-wrap: wrap;
 }
 
+.navbar ul {
+    /*Om ervoor te zorgen dat de menu-items op normale afstand van elkaar staan,
+    zorgen we dat de parent: <ul> minimaal 400px breed is*/
+    flex-basis: 400px;
+    flex-shrink: 1;
+    flex-grow: 0;
+    list-style-type: none;
+    /*Dit flex-item is op haar beurt ook weer een flex-container, die de <li> die erin zitten netjes evenredig verdeelt*/
+    display: flex;
+    /*flex-direction: column;*/
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+}
 
 .navbar li {
     list-style-type: none;
@@ -22,7 +37,8 @@
 
 .navbar a {
     text-decoration: none;
-    color: var(--orange);
+    /*color: var(--orange);*/
+    color: var(--white);
     border-radius: 5px;
     font-size: 20px;
     font-weight: bold;
@@ -32,3 +48,72 @@
 p {
     font-size: 20px;
 }
+
+
+
+/*-------------------HAMBURGER-MENU----------------------------*/
+
+#hamburger-menu {
+    background-color: var(--blue);
+    position: relative;
+    width: 60px;
+    height: 10px;
+    transition: all 0.15s ease-in-out;
+}
+
+#hamburger-menu::before,
+#hamburger-menu::after {
+    background-color: var(--blue);
+    display: block;
+    content: "";
+    width: 60px;
+    height: 10px;
+    position: absolute;
+    transition: all 0.35s ease-in-out;
+}
+
+#hamburger-menu::before {
+    left: 0;
+    top: -20px;
+}
+
+#hamburger-menu::after {
+    left: 0;
+    /*top: 20px mag ook! Komt op hetzelfde neer, want het is telkens 20px vanaf de boven of onderkant*/
+    bottom: -20px;
+}
+
+#hamburger-menu-container {
+    /*border: 1px solid red;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+
+    /* shorthand voor:
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 0;
+    padding-right: 0;
+     */
+    padding: 20px 0;
+}
+
+#hamburger-menu-container:hover #menu {
+    background-color: transparent;
+}
+
+#hamburger-menu-container:hover #menu::before {
+    transform: rotate(45deg);
+    /*Het is belangrijk om hier dezelfde property te bewerken als op #menu::before (dus allebei top, of allebei bottom) anders draait het kruisje niet goed vanuit het midden! */
+    top: 0;
+}
+
+#hamburger-menu-container:hover #menu::after {
+    transform: rotate(-45deg);
+    /*Het is belangrijk om hier dezelfde property te bewerken als op #menu::before (dus allebei top, of allebei bottom) anders draait het kruisje niet goed vanuit het midden! */
+    bottom: 0;
+}
+
+
+

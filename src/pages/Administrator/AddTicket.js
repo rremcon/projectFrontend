@@ -54,88 +54,92 @@ function AddTicket() {
 
     return (
         <>
-            <main>
-                <div className="form-container">
-                    <form onSubmit={addTicket}>
-                        <h1 className="form-title">Add Ticket</h1>
-                        <br/>
-                        <input
-                            type="id"
-                            id="id-field"
-                            value={id}
-                            onChange={(e) => setId(e.target.value)}
-                            name="id"
-                            placeholder="id"/>
-                        <br/>
-                        <br/>
-                        <input
-                            type="text"
-                            id="eventname-field"
-                            value={eventname}
-                            onChange={(e) => setEventname(e.target.value)}
-                            name="eventname"
-                            placeholder="eventname"/>
-                        <br/>
-                        <br/>
-                        <input
-                            type="tickettype"
-                            id="tickettype-field"
-                            value={tickettype}
-                            onChange={(e) => setTickettype(e.target.value)}
-                            name="tickettype"
-                            placeholder="tickettype"/>
-                        <br/>
-                        <br/>
-                        <input
-                            type="daytype"
-                            id="daytype-field"
-                            value={daytype}
-                            onChange={(e) => setDaytype(e.target.value)}
-                            name="daytype"
-                            placeholder="daytype"/>
-                        <br/>
-                        <br/>
-                        <input
-                            type="text"
-                            id="location-field"
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            name="location"
-                            placeholder="location"/>
-                        <br/>
-                        <br/>
-                        <div>{errormessage}</div>
-                        <input
-                            type="eventdate"
-                            id="eventdate-field"
-                            value={eventdate}
-                            onChange={(e) => setEventdate(e.target.value)}
-                            name="eventdate"
-                            placeholder="eventdate (yyyy-mm-dd)"/>
-                        <br/>
-                        <br/>
-                        <input
-                            type="price"
-                            id="price-field"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                            name="price"
-                            placeholder="price"/>
-                        <br/>
-                        <br/>
-                    </form>
+            <main className="outer-content-container">
+                <div className="inner-content-container">
 
-                    <Button
-                        type="submit"
-                        onClick={addTicket}
-                        visibleText="Add Ticket"
-                    />
-                    {confirm === true && <p>Yes! it's done.</p>}
+                    <div className="form-container">
+                        <form className="form" onSubmit={addTicket}>
+                            <h1 className="form-title">Add Ticket</h1>
+                            <br/>
+                            <input
+                                type="id"
+                                id="id-field"
+                                value={id}
+                                onChange={(e) => setId(e.target.value)}
+                                name="id"
+                                placeholder="id"/>
+                            <br/>
+                            <br/>
+                            <input
+                                type="text"
+                                id="eventname-field"
+                                value={eventname}
+                                onChange={(e) => setEventname(e.target.value)}
+                                name="eventname"
+                                placeholder="eventname"/>
+                            <br/>
+                            <br/>
+                            <input
+                                type="tickettype"
+                                id="tickettype-field"
+                                value={tickettype}
+                                onChange={(e) => setTickettype(e.target.value)}
+                                name="tickettype"
+                                placeholder="tickettype"/>
+                            <br/>
+                            <br/>
+                            <input
+                                type="daytype"
+                                id="daytype-field"
+                                value={daytype}
+                                onChange={(e) => setDaytype(e.target.value)}
+                                name="daytype"
+                                placeholder="daytype"/>
+                            <br/>
+                            <br/>
+                            <input
+                                type="text"
+                                id="location-field"
+                                value={location}
+                                onChange={(e) => setLocation(e.target.value)}
+                                name="location"
+                                placeholder="location"/>
+                            <br/>
+                            <br/>
+                            <div>{errormessage}</div>
+                            <input
+                                type="eventdate"
+                                id="eventdate-field"
+                                value={eventdate}
+                                onChange={(e) => setEventdate(e.target.value)}
+                                name="eventdate"
+                                placeholder="eventdate (yyyy-mm-dd)"/>
+                            <br/>
+                            <br/>
+                            <input
+                                type="price"
+                                id="price-field"
+                                value={price}
+                                onChange={(e) => setPrice(e.target.value)}
+                                name="price"
+                                placeholder="price"/>
+                            <br/>
+                            <br/>
 
-                </div>
+                            <Button
+                                type="submit"
+                                onClick={addTicket}
+                                visibleText="Add Ticket"
+                            />
+                            {confirm === true && <p>Yes! it's done.</p>}
+
+                        </form>
+
+                    </div>
+                    </div>
             </main>
         </>
-    );
+);
 }
 
 export default AddTicket;

@@ -1,10 +1,70 @@
+
+
+/*---------------------------------------------------CSS BORDER COLORS--------------------------------------------------------------*/
+
+/*body {*/
+/*  border: 4px solid #96ec15;*/
+/*}*/
+
+/*header,*/
+/*footer {*/
+/*  border: 4px solid #15ecec;*/
+/*}*/
+
+/*nav {*/
+/*  border: 4px solid darkorchid;*/
+/*}*/
+
+/*main {*/
+/*  border: 4px solid #956536;*/
+/*}*/
+
+/*ul {*/
+/*  border: 4px solid #0059ff;*/
+/*}*/
+
+/*li {*/
+/*  border: 4px solid orange;*/
+/*}*/
+
+/*div {*/
+/*  border: 4px solid #e76455;*/
+/*}*/
+
+/*article {*/
+/*  border: 4px solid darkred;*/
+/*}*/
+
+/*p {*/
+/*  border: 4px solid darkcyan;*/
+/*}*/
+
+/*h2 {*/
+/*  border: 4px solid darkslateblue;*/
+/*}*/
+
+/*form {*/
+/*  border: 4px solid hotpink;*/
+/*}*/
+
+/*img {*/
+/*  border: 4px solid yellow;*/
+/*}*/
+
+/*.image-wrapper {*/
+/*  border: 4px solid #fb9468;*/
+/*}*/
+
+/*section {*/
+/*  border: 4px solid #444040;*/
+/*}*/
+
+
+
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Roboto:wght@100&display=swap');
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+
+/* ------------------------------- GLOBAL STYLES -------------------------------- */
 
 
 :root {
@@ -17,32 +77,113 @@
 }
 
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
 body {
   font-family: 'Poppins', sans-serif;
-  max-width: 1400px;
-  margin: 10px;
-  padding: 20px;
+  /*max-width: 1400px;*/
+  /*margin: 10px;*/
+  /*padding: 20px;*/
 }
 
 
-header {
+/* ---------------------------------------- REUSABLES ----------------------- */
+
+/* De buitenste container is altijd de volledige schermbreedte.
+Het is een flexbox container die zijn inhoud altijd netjes horizontaal centreert */
+.outer-content-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/*De binnenste container is maximaal 1400px breed, zodat het er ook goed uitziet op brede schermen.
+Hij mag krimpen als het scherm minder breed wordt, maar niet groeien als er meer ruimte is.*/
+.inner-content-container {
+  flex-basis: 1400px;
+  flex-shrink: 1;
+  flex-grow: 0;
+  /*We voegen margin toe aan de linker- en rechterkant, zodat de content nooit helemaal tegen de rand gedrukt kan worden*/
+  margin: 20px 20px;
+  /*We zorgen er ook voor dat deze flex-item op zijn beurt ook weer een flexbox container is,
+  waarin alle children onder elkaar komen te staan*/
   display: flex;
   flex-direction: column;
-  background-color: white;
-  margin: 20px;
-  position: relative;
+  align-items: center;
+  /*flex-wrap: wrap;*/
 }
 
 
-.head-title-container {
-  margin: 10px;
+/*We gebruiken hier geen flex-basis property, omdat dit element soms in een parent met column-richting en soms in een
+   parent met row-richting kan staan.
+   In een column gaat flex-basis over de hoogte, niet de breedte.
+   Dus om dan alsnog de breedte te veranderen, hebben we een max-width (nooit groter dan dit) property nodig */
+.default-text-restrictor {
+  max-width: 850px;
+  text-align: center;
+}
+
+.default-area-padding {
+  padding: 20px 0;
+}
+
+/* --------------------------------------- AREAS ---------------------------------------- */
+
+
+/* --------------------------------------- HEADER ------------------------- */
+
+/*!* INNER HEADER *!*/
+/*!*De binnenste container is maximaal 1400px breed, zodat het er ook goed uitziet op brede schermen.*/
+/*Hij mag krimpen als het scherm minder breed wordt, maar niet groeien als er meer ruimte is.*!*/
+/*.inner-content-container-header {*/
+/*  flex-basis: 1400px;*/
+/*  flex-shrink: 1;*/
+/*  flex-grow: 0;*/
+/*  !*We voegen margin toe aan de linker- en rechterkant, zodat de content nooit helemaal tegen de rand gedrukt kan worden*!*/
+/*  margin: 20px 20px;*/
+/*  !*We zorgen er ook voor dat deze flex-item op zijn beurt ook weer een flexbox container is,*/
+/*  waarin alle children onder elkaar komen te staan*!*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: flex-start;*/
+/*  !*flex-wrap: wrap;*!*/
+/*}*/
+
+
+
+/*header {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  background-color: white;*/
+/*  margin: 20px;*/
+/*  position: relative;*/
+/*}*/
+
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  /*justify-content: flex-start;*/
+  align-items: flex-start;
+  width: 100%;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-wrap: wrap;
+
+  /*flex-basis: 300px;*/
 }
 
 
-header img {
-  width: 15%;
-  margin: 10px;
-}
+/*header img {*/
+/*  width: 15%;*/
+/*  margin: 10px;*/
+/*}*/
 
 
 header h1 {
@@ -57,34 +198,32 @@ header h3 {
 }
 
 
-.page-title {
-  text-align: left;
-  color: var(--blue);
-}
+/*.page-title {*/
+/*  text-align: left;*/
+/*  color: var(--blue);*/
+/*}*/
 
+
+/* ----------------------------------------- MAIN ------------------------- */
+
+/*main {*/
+/*  text-align: center;*/
+/*  font-size: 12px;*/
+/*  background-color: var(--white);*/
+/*  color: var(--black);*/
+/*  padding: 10px;*/
+/*  margin: 20px;*/
+/*}*/
+
+
+/*Belangrijk om het main element eerst even goed in te stellen, zodat alle content op dezelfde afstand van de rand komt te staan.
+Geef het <main>-element een maximale breedte van 1000px en plaats hem in het midden met de juiste margin.*/
 
 main {
-  text-align: center;
-  font-size: 12px;
-  background-color: var(--white);
-  color: var(--black);
-  padding: 10px;
-  margin: 20px;
-}
-
-
-.form-container {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: left;
-}
-
-
-.form-title {
-  text-align: center;
-  color: var(--blue);
+  /*margin: 10px;*/
+  /*max-width: 1000px;*/
 }
 
 
@@ -99,67 +238,214 @@ main {
 }
 
 
-.table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 1em;
+.image-wrapper {
+  max-width: 300px;
+  flex-shrink: 1;
+  flex-grow: 0;
 }
 
 
-.table td, .items th {
+.image-wrapper-product-grid {
+  max-width: 800px;
+  flex-shrink: 1;
+  flex-grow: 0;
+}
+
+
+img {
+  max-width: 100%
+}
+
+
+/* ----------------------------------------- FORMS -------------------------------- */
+
+/*.form-container {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  text-align: left;*/
+/*}*/
+
+.form-container {
+  max-width: 200px;
+  flex-shrink: 1;
+  flex-grow: 0;
+}
+
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /*align-items: center;*/
+  /*text-align: left;*/
+  /*border-color: var(--black);*/
+  /*border-radius: 30px;*/
+  /*flex-basis: 1400px;*/
+  flex-shrink: 1;
+  flex-grow: 0;
+  /*margin: 0 20px;*/
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.page-title-sold-out {
+  color: var(--red);
+}
+
+.page-title,
+.form-title {
+  /*text-align: center;*/
+  color: var(--blue);
+}
+
+
+.confirmation-not {
+  color: var(--red);
+}
+
+
+/* --------------------------------------- TABLES -------------------------------- */
+
+
+table {
+  table-layout: fixed;
+  border-collapse: collapse;
+  /*border-collapse: separate;*/
+  width: auto;
+  /*width: 90%;*/
+  /*margin: 20px 0;*/
+  margin-bottom: 1em;
+  font-size: 14px;
+  word-wrap: break-word;
+  /*border-spacing: 10px;*/
+  /*border-spacing: 0;*/
+}
+
+
+table td, table th {
   border: 1px solid var(--orange);
   padding: 0.1em;
 }
 
 
-.table tr:nth-child(even) {
-  background-color: var(--grey);
+/*.table td, .items th {*/
+/*    border: 1px solid var(--orange);*/
+/*    padding: 0.1em;*/
+/*}*/
+
+
+table tr:nth-child(even) {
+  background-color: #918a8a;
 }
 
-
-.table tr:hover {
+table tr:hover {
   background-color: var(--orange);
 }
 
-
-.table th {
-  padding-bottom: 1em;
+table th {
+  background-color: var(--blue);
+  color: var(--white);
   text-align: left;
-  color: var(--black);
+  padding-bottom: 1em;
 }
 
+/*td > img {*/
+/*  width: 60px;*/
+/*  border-radius: 50%;*/
+/*}*/
+
+
+/*.table-button {*/
+/*  padding: 0.5em 1em;*/
+/*  border-radius: 5px;*/
+/*  color: var(--white);*/
+/*  border-color: var(--blue);*/
+/*  background-color: var(--grey);*/
+/*  margin-left: 2em;*/
+/*}*/
+
+
+/*-------------------------------------------*/
+
+/*.table {*/
+/*  border-collapse: collapse;*/
+/*  width: 100%;*/
+/*  margin-bottom: 1em;*/
+/*}*/
+
+
+/*.table td, .items th {*/
+/*  border: 1px solid var(--orange);*/
+/*  padding: 0.1em;*/
+/*}*/
+
+
+/*.table tr:nth-child(even) {*/
+/*  background-color: var(--grey);*/
+/*}*/
+
+
+/*.table tr:hover {*/
+/*  background-color: var(--orange);*/
+/*}*/
+
+
+/*.table th {*/
+/*  padding-bottom: 1em;*/
+/*  text-align: left;*/
+/*  color: var(--black);*/
+/*}*/
+
+
+/* -------------------------------------- FOOTER --------------------------- */
+
+/*footer {*/
+/*  text-align: center;*/
+/*  font-size: 8px;*/
+/*  background-color: var(--black);*/
+/*  color: var(--white);*/
+/*  padding: 10px;*/
+/*  margin: 20px;*/
+/*}*/
 
 footer {
   text-align: center;
-  font-size: 8px;
+  font-size: 18px;
   background-color: var(--black);
   color: var(--white);
-  padding: 10px;
-  margin: 20px;
+  /*padding: 10px;*/
+  /*margin: 20px;*/
 }
 
 
-.footer-images-container {
+.footer-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  grid-template-rows: auto auto auto;
-  padding: 10px;
+  /*justify-items: flex-start;*/
+  /*justify-content: space-around;*/
+  /*grid-template-rows: auto auto auto;*/
+  padding: 5px;
+  margin: 5px;
   flex-grow: 0;
   flex-shrink: 1;
   flex-wrap: wrap;
+  /*border: 2px solid;*/
+  /*border-color: var(--orange);*/
 }
 
-
-.footer-images-container img {
+.footer-container img {
   border: 2px solid;
   border-color: var(--orange);
-  margin: 5px;
+  /*margin: 5px;*/
   padding: 5px;
-  height: 200px;
-  width: 300px;
+  /*height: 200px;*/
+  /*width: 300px;*/
 }
 
+
+/*--------------------------------- MEDIA QUERIES TABLES ----------------------------------------*/
 
 @media screen and (max-width: 1000px) {
   .table {
@@ -207,4 +493,11 @@ footer {
   .table {
     width: 10%
   }
+
 }
+
+
+
+
+
+

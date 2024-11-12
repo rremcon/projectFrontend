@@ -28,16 +28,27 @@ function App() {
     const {isAuth} = useContext(AuthContext);
 
     return (
-      <>
-          <header>
-              <Picture
-                  img={race_helmet}
-                  imgTitle="helmet"
-              />
-                  <div className="head-title-container"><h1>ticketsdutchgp.com</h1>
-                      <h3><em>Racing Events.</em></h3></div>
 
-              <Nav/>
+      <>
+          <header id="header" className="outer-content-container">
+              <div className="inner-content-container">
+
+                  <div className="header-container">
+
+                      <Picture
+                          className="image-wrapper"
+                          img={race_helmet}
+                          imgTitle="helmet"
+                      />
+
+                      <h2>ticketsdutchgp.com</h2>
+                      <h3><em>Racing Events.</em></h3>
+
+                      <Nav/>
+
+                  </div>
+
+              </div>
 
           </header>
 
@@ -59,25 +70,34 @@ function App() {
               <Route path="*" element={<NotFoundPage/>}/>
           </Routes>
 
-          <footer>
-              <>
-                  <div className="footer-images-container">
-                      <Picture
-                               img={f1_car_redbull_spa_francorchamps}
-                               imgTitle="f1_car_redbull_spa_francorchamps"
-                      />
-                      <Picture
-                               img={sbk_moto_gp_circuit_racing}
-                               imgTitle="sbk_moto_gp_circuit_racing"
-                      />
-                      <Picture
-                               img={dtm_car_porsche_bmw}
-                               imgTitle="dtm-car-porsche-bmw"
-                      />
-                  </div>
-              </>
-              <div>
-                  <h1>info@ticketsdutchgp.com</h1>
+
+          <footer id="footer" className="outer-content-container">
+              {/*<>*/}
+                  <div className="inner-content-container">
+                      {/*<div className="footer-images-container">*/}
+                      <div className="footer-container">
+
+                          <Picture
+                              className="image-wrapper"
+                              img={f1_car_redbull_spa_francorchamps}
+                              imgTitle="f1_car_redbull_spa_francorchamps"
+                          />
+                          <Picture
+                              className="image-wrapper"
+                              img={sbk_moto_gp_circuit_racing}
+                              imgTitle="sbk_moto_gp_circuit_racing"
+                          />
+                          <Picture
+                              className="image-wrapper"
+                              img={dtm_car_porsche_bmw}
+                              imgTitle="dtm-car-porsche-bmw"
+                          />
+                      </div>
+                      {/*</div>*/}
+                  {/*</>*/}
+                  {/*<div className="footer-copyright-tekst">*/}
+                  <h6>info@ticketsdutchgp.com</h6>
+              {/*</div>*/}
               </div>
           </footer>
 

@@ -1,22 +1,22 @@
 
-.product-item {
-    margin: 60px;
-    padding: 20px;
+.product-tile {
+    /*margin: 60px;*/
+    /*padding: 20px;*/
 }
 
 
-.product-item img {
+.product-tile img {
     height: 300px;
     width: 300px;
 }
 
 
-.product-item h1 {
+.product-tile h1 {
     color: var(--blue);
 }
 
 
-.product-item span {
+.product-tile span {
     font-size: 25px;
     color: var(--blue);
 }

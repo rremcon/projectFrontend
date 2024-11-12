@@ -10,14 +10,14 @@ const NotFoundPage = () => {
 
         setTimeout( ()=> {
             navigate("/")
-        }, 1000)
+        }, 3000)
 
     }, [])
 
 
         return (
             <>
-                <h3>Not Found | 404</h3>
+                <h1>Oops! That page can't be found | 404</h1>
             </>
         );
 };

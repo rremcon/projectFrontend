@@ -6,7 +6,6 @@ import Button from "../../components/Button/Button";
 import Product from "../../components/Product/Product";
 import './Products.css'
 
-//PRODUCT COMPONENT WORDT (NOG) NERGENS GEBRUIKT!?
 
 const Products = () => {
 
@@ -47,69 +46,58 @@ const Products = () => {
 
     return (
         <>
-            <main>
-            {loading && <p>Loading...</p>}
-            {error && <p></p>}
+            <main className="outer-content-container">
+                <div className="inner-content-container">
 
-            <h1 className="page-title">Buy Products</h1>
-            <div className="grid-container">
-                {
-                    products.map((product) => {
-                        return (
-                            <article className="grid-box"
-                                key={product.id}>
-                                <Link to={`/product/${product.id}`}>
-                                    <Picture
-                                        img={product.img}
-                                        imgTitle={product.title}
-                                    />
-                                    <div className="grid-box-content">
-                                    <h3 className="box-title">
-                                        {product.title.slice(0, 25)}</h3>
-                                    <br/>
-                                    <p className="box-content">
-                                        {product.description}</p>
-                                        <br/>
-                                        <span className="box-price">€{product.price}</span>
-                                        <br/>
+                    {loading && <p>Loading...</p>}
+                    {error && <p></p>}
 
-                                        <Button
-                                            className="buy-button"
-                                            type="button"
-                                            visibleText="Buy"
-                                        />
+                    <h1 className="page-title">Buy Products</h1>
+                    {/*<div className="grid-container">*/}
+                    <div className="grid-product-container">
+                        {
+                            products.map((product) => {
+                                return (
 
+                                    // <article className="grid-box"
+                                    //          key={product.id}>
 
-                                        {/*<Product/>*/}
-                                        {/*<Product/>*/}
-                                        {/*<Product/>*/}
-                                        {/*<Product/>*/}
-                                        {/*<Product/>*/}
-                                        {/*<Product/>*/}
-                                        {/*<Product/>*/}
-                                        {/*<Product/>*/}
+                                        <Link key={product.id} to={`/product/${product.id}`}>
 
-                                        {/*<Product*/}
-                                        {/*    title="productexample"*/}
-                                        {/*    description="productdescriptionexample"*/}
-                                        {/*/>*/}
+                                            {/*<Picture*/}
+                                            {/*    className="image-wrapper-product-grid"*/}
+                                            {/*    img={product.img}*/}
+                                            {/*    imgTitle={product.title}*/}
+                                            {/*/>*/}
 
-                                        {/*<Product*/}
-                                        {/*    title="productexample"*/}
-                                        {/*    description="productdescriptionexample"*/}
-                                        {/*/>*/}
+                                            <Product
+                                                // className="grid-box"
+                                                className="grid-product-tile"
+                                                id={product.id}
+                                                img={product.img}
+                                                title={product.title}
+                                                description={product.description}
+                                                price={product.price}
+                                            />
 
+                                            {/*<Button*/}
+                                            {/*    className="buy-button"*/}
+                                            {/*    type="submit"*/}
+                                            {/*    visibleText="Buy"*/}
+                                            {/*/>*/}
 
+                                        </Link>
+                                    // </article>
+
+                                )
+                                            })
+                                            }
+                                        </div>
                                     </div>
-                                </Link>
-                            </article>
-                        )
-                    })
-                }
-            </div>
-            </main>
-        </>
-    );
-}
+                            </main>
+                            </>
+                            )
+                                ;
+                            }
 
-export default Products;
+                            export default Products;

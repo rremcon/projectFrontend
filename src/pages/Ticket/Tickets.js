@@ -25,11 +25,14 @@ function Tickets() {
 
     return (
         <>
-            <main>
-                <div className="inner-container">
+            <main className="outer-content-container">
+                <div className="inner-content-container">
+
                     <h1 className="page-title">Book Tickets</h1>
                     <br/>
+
                     <table className="table">
+                    {/*<table>*/}
                         <thead>
                         <tr>
                             <th>TicketId</th>
@@ -60,6 +63,7 @@ function Tickets() {
                                     visibleText="select"
                                 />
                                 </Link>
+
                             </tr>
                         })}
                         </tbody>

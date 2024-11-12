@@ -59,12 +59,15 @@ function AdminTickets() {
 
     return (
         <>
-            <main>
-                <div className="inner-container">
+            <main className="outer-content-container">
+                <div className="inner-content-container">
+
                     <h1 className="page-title">Tickets</h1>
                     <h5>(Only accessible for administrator)</h5>
                     <br/>
+
                     <table className="table">
+                    {/*<table>*/}
                         <thead>
                         <tr>
                             <th>TicketId</th>

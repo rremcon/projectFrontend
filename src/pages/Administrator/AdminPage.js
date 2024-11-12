@@ -7,8 +7,8 @@ function AdminPage() {
 
     return (
         <>
-            <main>
-                <div className="inner-container">
+            <main className="outer-content-container">
+                <div className="inner-content-container">
                     <h1 className="page-title">Admin Portal</h1>
                     <br/>
                     <Link to={`/admin/accounts`}>
