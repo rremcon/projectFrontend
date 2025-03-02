@@ -1,0 +1,19 @@
+
+.book-ticket-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-wrap: wrap;
+}
+
+.form-container-ticket-handling {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  /*margin-top: 1em;*/
+  /*margin-bottom: 1em;*/
+  margin: 20px;
+}

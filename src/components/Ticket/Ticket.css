@@ -1,0 +1,23 @@
+
+.ticket-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 200px;
+    height: 300px;
+    background-color: grey;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border-radius: 15px;
+}
+
+
+.ticket-item h1 {
+    color: var(--blue);
+}
+
+
+.ticket-item span {
+    font-size: 25px;
+    color: var(--blue);
+}

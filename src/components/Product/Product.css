@@ -1,0 +1,22 @@
+
+.product-tile {
+    /*margin: 60px;*/
+    /*padding: 20px;*/
+}
+
+
+.product-tile img {
+    height: 300px;
+    width: 300px;
+}
+
+
+.product-tile h1 {
+    color: var(--blue);
+}
+
+
+.product-tile span {
+    font-size: 25px;
+    color: var(--blue);
+}
